@@ -1,5 +1,23 @@
 *{
     margin: 0;
     padding: 0;
-    color: blue;
+    color: white;
+    background-color: rgb(1, 1, 53);
+}
+
+.gameboard-container{
+    display: grid;
+    margin-top: 30px;
+    justify-content: center;
+    /* margin: 100px; */
+    /* width: 10%; */
+    grid-template-columns: repeat(3,100px);
+    grid-template-rows: repeat(3,100px);
+    
+}
+
+.box{
+    cursor: pointer;
+    background-color: rgb(6, 29, 102);
+    border: 1px solid rgba(255, 255, 255, 0.45);
 }
