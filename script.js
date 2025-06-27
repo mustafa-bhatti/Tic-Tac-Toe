@@ -16,7 +16,8 @@ const gameboard = (function(){
     }
 
     const move = function(pos,player){
-        if (player == "player1"){
+        let isValid = false
+        if (player == true){
             player = player1
         }
         else {
@@ -24,14 +25,15 @@ const gameboard = (function(){
         }
         if (typeof(board[pos]) == "number"){
             board[pos] = player;
+            isValid=true
         }
         // else {
         //  alert("ERROR: already a marker there")}
-        console.log(`new move at index: ${pos}`)
+        console.log(`Player ${player} move at index: ${pos}`)
         displayBoard()
         checkWin(player1)
         checkWin(player2)
-
+        return isValid
 
     }
     const checkWin = function(marker){
@@ -65,13 +67,35 @@ const gameboard = (function(){
     }
 })()
 
-gameboard.move(2,"player1")
-gameboard.move(4,"player1")
-gameboard.move(6,"player1")
-gameboard.move(0,"player2")
-gameboard.move(1,"player2")
+// gameboard.move(2,"player1")
+// gameboard.move(4,"player1")
+// gameboard.move(6,"player1")
+// gameboard.move(0,"player2")
+// gameboard.move(1,"player2")
 
-
+const game = (function(){
+    let box = document.querySelectorAll(".box");
+    let turn = true;
+    const bindEvent = function(){
+        box.forEach((b,e)=>{
+            b.addEventListener("click",function(e){
+                updateVal(e)
+            })
+        })
+    }
+    const updateVal = function(e){
+        let pos = e.target.dataset.value
+        let moveFlag = gameboard.move(pos,turn)
+        if (moveFlag){
+        const element = document.createElement("p")
+        const textNode = document.createTextNode("O")
+        element.appendChild(textNode)
+        e.target.appendChild(element)
+        turn = !turn;
+        }
+    }
+    bindEvent()
+})()
 
 
 
