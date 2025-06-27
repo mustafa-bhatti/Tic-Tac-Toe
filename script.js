@@ -90,6 +90,12 @@ const game = (function(){
         console.log(player)
         const element = document.createElement("p")
         const textNode = document.createTextNode(player)
+        if (turn){
+            element.classList.add("addX")
+        }
+        else {
+            element.classList.add("addO")
+        }
         element.appendChild(textNode)
         e.target.appendChild(element)
         turn = !turn;
