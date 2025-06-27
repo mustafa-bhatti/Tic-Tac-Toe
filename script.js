@@ -33,7 +33,7 @@ const gameboard = (function(){
         displayBoard()
         checkWin(player1)
         checkWin(player2)
-        return isValid
+        return [isValid,player]
 
     }
     const checkWin = function(marker){
@@ -85,10 +85,11 @@ const game = (function(){
     }
     const updateVal = function(e){
         let pos = e.target.dataset.value
-        let moveFlag = gameboard.move(pos,turn)
+        let [moveFlag,player] = gameboard.move(pos,turn)
         if (moveFlag){
+        console.log(player)
         const element = document.createElement("p")
-        const textNode = document.createTextNode("O")
+        const textNode = document.createTextNode(player)
         element.appendChild(textNode)
         e.target.appendChild(element)
         turn = !turn;
