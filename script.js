@@ -136,6 +136,8 @@ const gameboard = (function(){
                 winCard.classList.toggle("hide-div")
                 winSound.currentTime = 0;
                 winSound.play()
+
+
                 return true
             }
 
@@ -206,14 +208,13 @@ const game = (function(){
         element1score.textContent = p1Score;
         element2score.textContent = p2Score;
 
-        whichPlayer.classList.toggle("player-orange")
+        whichPlayer.classList.remove("player-orange")
         
         turn = true
     }
 
     const setNames = function(){
-        
-        
+
         let validity =true;
             inputField.forEach((value) =>{
                 if (value.checkValidity()==false){
@@ -260,13 +261,13 @@ const game = (function(){
                 if (turn){
                     element.classList.add("addX","move")
                     whichPlayer.textContent = player2name
-                    whichPlayer.classList.toggle("player-orange")
+                    whichPlayer.classList.add("player-orange")
                     
                 }
                 else {
                     element.classList.add("addO","move")
                     whichPlayer.textContent=player1name
-                    whichPlayer.classList.toggle("player-orange")
+                    whichPlayer.classList.remove("player-orange")
 
 
                 }
