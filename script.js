@@ -3,6 +3,8 @@ const player = (function(){
     let player2= "O"
     let player1Name;
     let player2Name;
+    let player1score = 0
+    let player2score = 0
     let win = false
     
     const isWin = function(){
@@ -38,13 +40,17 @@ const player = (function(){
     const getPlayernames = function(){
         return [player1Name,player2Name]
     }
+    const getPlayerScores = function(){
+        return [player1score,player2score]
+    }
     return {
        getPlayer1,
        resetWin,
        getPlayer2,
        isWin,getWin,
        setPlayers,
-       getPlayernames
+       getPlayernames,
+       getPlayerScores
     }
 })()
 
@@ -116,7 +122,7 @@ const gameboard = (function(){
                 turnCard.classList.toggle("hide-div")
                 winCard.classList.toggle("hide-div")
                 winSound.currentTime = 0;
-                winSound.volume= 0.1
+                winSound.volume= 0.06
                 winSound.play()
                 return true
             }
@@ -147,9 +153,11 @@ const game = (function(){
     const inputField = document.querySelectorAll("input");
     let box = document.querySelectorAll(".box");
     let whichPlayer = document.querySelector("#which-player");
+
     dialog.showModal()
     const newGame = document.querySelector(".newBtn")
     let turn = true;
+    const resetSound = new Audio("audio/swoosh.mp3")
 
     const bindEvent = function(){
         box.forEach((b,e)=>{
@@ -162,6 +170,10 @@ const game = (function(){
     }
 
     const reset = function(){
+        resetSound.duration = 0;
+        resetSound.volume = 0.08;
+
+        resetSound.play()
         gameboard.init()
         box.forEach((b) => {
             b.replaceChildren()
@@ -172,6 +184,13 @@ const game = (function(){
     }
 
     const setNames = function(){
+        const player1Score = document.querySelector(".player1-score-container")
+        const player2Score = document.querySelector(".player2-score-container")
+        const element1 = document.createElement("p")
+        const element2 = document.createElement("p")
+        const element1score = document.createElement("p")
+        const element2score = document.createElement("p")
+        
         let validity =true;
             inputField.forEach((value) =>{
                 if (value.checkValidity()==false){
@@ -184,6 +203,25 @@ const game = (function(){
                 player.setPlayers(player1input,player2input)
                 whichPlayer.textContent=player1input
 
+                const node1 = document.createTextNode(player1input)
+                const node2 = document.createTextNode(player2input)
+                let [p1Score,p2Score] = player.getPlayerScores()
+                const node1score = document.createTextNode(p1Score)
+                const node2score = document.createTextNode(p2Score)
+
+                element1.appendChild(node1)
+                element1score.appendChild(node1score)
+                element2.appendChild(node2)
+                element2score.appendChild(node2score)
+                element1score.classList.add("score")
+                element2score.classList.add("score")
+
+                player1Score.appendChild(element1)
+                player1Score.appendChild(element1score)
+                player2Score.appendChild(element2)
+                player2Score.appendChild(element2score)
+                
+                
             }
     }
     // Showing whose turn it is

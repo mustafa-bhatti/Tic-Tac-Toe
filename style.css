@@ -32,8 +32,8 @@ body {
 }
 .box p {
     background-color: transparent;
-    font-size: 70px;
-    margin-top: 20px;
+    font-size: 100px;
+    margin-top: 7px;
     /* text-shadow: 0px 0px 10px rgb(7, 7, 255); */
 }
 
@@ -53,10 +53,10 @@ body {
 
 .game-stats-container{
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     font-size: 1.7rem;
     font-weight: bold;
-    gap: 100px;
+    gap: 50px;
     margin-top: 20px;
 
 }
@@ -144,4 +144,8 @@ button:active{
 
 .newBtn{
     margin: 20px 0px;
+}
+
+.score {
+    /* font-size: 30px; */
 }
