@@ -56,6 +56,8 @@ const gameboard = (function(){
     const turnCard = document.querySelector(".turn")
     const winCard = document.querySelector(".win-card")
 
+    const hit = new Audio("audio/pop.mp3")
+    const winSound = new Audio("audio/win.mp3")
     const init = function(){
         for(let i=0;i<9;i++){
             board[i] = i
@@ -79,7 +81,11 @@ const gameboard = (function(){
         if (typeof(board[pos]) == "number"){
             board[pos] = curr_player;
             isValid=true
+            hit.currentTime=0;
+            hit.volume=0.9
+            hit.play()
             player.isWin()
+
             // console.log(player)
         }
         // else {
@@ -109,6 +115,9 @@ const gameboard = (function(){
                 isWin.textContent=name
                 turnCard.classList.toggle("hide-div")
                 winCard.classList.toggle("hide-div")
+                winSound.currentTime = 0;
+                winSound.volume= 0.1
+                winSound.play()
                 return true
             }
 
@@ -153,13 +162,13 @@ const game = (function(){
     }
 
     const reset = function(){
-        console.log("we out here")
         gameboard.init()
         box.forEach((b) => {
             b.replaceChildren()
         })
         player.resetWin()
         gameboard.winReset()
+        turn = true
     }
 
     const setNames = function(){
