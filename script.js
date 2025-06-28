@@ -16,6 +16,9 @@ const player = (function(){
         }   
         return win
     }
+    const getWin = function(){
+        return win
+    }
     const getPlayer1 = function(){
         return player1
     }
@@ -23,7 +26,7 @@ const player = (function(){
     return player2
     }
     return {
-       getPlayer1,getPlayer2,isWin
+       getPlayer1,getPlayer2,isWin,getWin
     }
 })()
 
@@ -130,7 +133,7 @@ const game = (function(){
     const updateVal = function(e){
         let pos = e.target.dataset.value
 
-        if (!player.isWin()){
+        if (!player.getWin()){
             let [moveFlag,playerTurn] = gameboard.move(pos,turn)
             if (moveFlag){
 
