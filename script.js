@@ -14,7 +14,13 @@ const player = (function(){
         else if (isWin2 == true){
             win = player2Name;
         }   
+        else {
+            win =false
+        }
         return win
+    }
+    const resetWin = function(){
+        win = false
     }
     const getWin = function(){
         return win
@@ -33,7 +39,12 @@ const player = (function(){
         return [player1Name,player2Name]
     }
     return {
-       getPlayer1,getPlayer2,isWin,getWin,setPlayers,getPlayernames
+       getPlayer1,
+       resetWin,
+       getPlayer2,
+       isWin,getWin,
+       setPlayers,
+       getPlayernames
     }
 })()
 
@@ -41,6 +52,9 @@ const gameboard = (function(){
     let board = [];
     let player1 = player.getPlayer1();
     let player2 = player.getPlayer2();
+    const isWin = document.querySelector(".who-win")
+    const turnCard = document.querySelector(".turn")
+    const winCard = document.querySelector(".win-card")
 
     const init = function(){
         for(let i=0;i<9;i++){
@@ -77,9 +91,7 @@ const gameboard = (function(){
     }
 
     const checkWin = function(marker,name){
-        const isWin = document.querySelector(".who-win")
-        const turnCard = document.querySelector(".turn")
-        const winCard = document.querySelector(".win-card")
+        
         let winCombos = [
             [0,1,2],[3,4,5],[6,7,8],
             [0,3,6],[1,4,7],[2,5,8],
@@ -95,14 +107,19 @@ const gameboard = (function(){
             if (win == true){
                 console.log("Player ",marker," Wins")
                 isWin.textContent=name
-                turnCard.classList.add("hide-div")
+                turnCard.classList.toggle("hide-div")
                 winCard.classList.toggle("hide-div")
                 return true
             }
+
         }
     }
     
-    
+    const winReset = function(){
+        isWin.textContent=""
+        turnCard.classList.toggle("hide-div")
+        winCard.classList.toggle("hide-div")
+    }
     init()
     displayBoard()
 
@@ -110,7 +127,8 @@ const gameboard = (function(){
         init,
         displayBoard,
         move,
-        checkWin
+        checkWin,
+        winReset
     }
 })()
 
@@ -118,13 +136,12 @@ const game = (function(){
     const dialog = document.querySelector("dialog")
     const submitBtn = document.querySelector(".submit-dialog")
     const inputField = document.querySelectorAll("input");
-
-
-
     let box = document.querySelectorAll(".box");
     let whichPlayer = document.querySelector("#which-player");
     dialog.showModal()
+    const newGame = document.querySelector(".newBtn")
     let turn = true;
+
     const bindEvent = function(){
         box.forEach((b,e)=>{
             b.addEventListener("click",function(e){
@@ -132,7 +149,19 @@ const game = (function(){
             })
         })
         submitBtn.addEventListener("click",setNames)
+        newGame.addEventListener("click",reset)
     }
+
+    const reset = function(){
+        console.log("we out here")
+        gameboard.init()
+        box.forEach((b) => {
+            b.replaceChildren()
+        })
+        player.resetWin()
+        gameboard.winReset()
+    }
+
     const setNames = function(){
         let validity =true;
             inputField.forEach((value) =>{
@@ -148,7 +177,7 @@ const game = (function(){
 
             }
     }
-    
+    // Showing whose turn it is
     const updateVal = function(e){
         let pos = e.target.dataset.value
         
@@ -159,12 +188,12 @@ const game = (function(){
                 const element = document.createElement("p")
                 const textNode = document.createTextNode(playerTurn)
                 if (turn){
-                    element.classList.add("addX")
+                    element.classList.add("addX","move")
                     whichPlayer.textContent = player2name
 
                 }
                 else {
-                    element.classList.add("addO")
+                    element.classList.add("addO","move")
                     whichPlayer.textContent=player1name
 
                 }
@@ -175,7 +204,7 @@ const game = (function(){
             }
         }
 
-
+        // execute bind method
     bindEvent()
 })()
 
