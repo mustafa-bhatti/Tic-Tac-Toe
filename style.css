@@ -62,8 +62,11 @@ body {
 
 }
 
-#which-player{
-    color: rgb(217, 140, 24); 
+.which-player{
+    color: rgb(180, 17, 17); 
+}
+.player-orange{
+    color: rgb(255, 123, 0);
 }
 .hide-div{
     display: none;

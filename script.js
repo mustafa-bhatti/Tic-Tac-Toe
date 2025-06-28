@@ -163,8 +163,8 @@ const game = (function(){
     const dialog = document.querySelector("dialog")
     const submitBtn = document.querySelector(".submit-dialog")
     const inputField = document.querySelectorAll("input");
-    let box = document.querySelectorAll(".box");
-    let whichPlayer = document.querySelector("#which-player");
+    const box = document.querySelectorAll(".box");
+    const whichPlayer = document.querySelector(".which-player");
     // SCORE CONTAINERS
     const player1Score = document.querySelector(".player1-score-container")
     const player2Score = document.querySelector(".player2-score-container")
@@ -206,6 +206,7 @@ const game = (function(){
         element1score.textContent = p1Score;
         element2score.textContent = p2Score;
 
+        whichPlayer.classList.toggle("player-orange")
         
         turn = true
     }
@@ -259,11 +260,14 @@ const game = (function(){
                 if (turn){
                     element.classList.add("addX","move")
                     whichPlayer.textContent = player2name
-
+                    whichPlayer.classList.toggle("player-orange")
+                    
                 }
                 else {
                     element.classList.add("addO","move")
                     whichPlayer.textContent=player1name
+                    whichPlayer.classList.toggle("player-orange")
+
 
                 }
                 element.appendChild(textNode)
