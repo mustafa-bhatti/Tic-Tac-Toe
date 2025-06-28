@@ -140,7 +140,6 @@ const gameboard = (function(){
 
                 return true
             }
-
         }
     }
     
@@ -151,7 +150,6 @@ const gameboard = (function(){
     }
     init()
     displayBoard()
-
     return {
         init,
         displayBoard,
@@ -178,10 +176,9 @@ const game = (function(){
     dialog.showModal()
     const newGame = document.querySelector(".newBtn")
     let turn = true;
-
     const resetSound = new Audio("audio/swoosh.mp3")
-
     const bindEvent = function(){
+
         box.forEach((b,e)=>{
             b.addEventListener("click",function(e){
                 updateVal(e)
@@ -192,6 +189,7 @@ const game = (function(){
     }
 
     const reset = function(){
+
         resetSound.duration = 0;
         resetSound.volume = 0.03;
 
@@ -250,6 +248,7 @@ const game = (function(){
     }
     // Showing whose turn it is
     const updateVal = function(e){
+
         let pos = e.target.dataset.value
         
         if (!player.getWin()){
@@ -259,13 +258,13 @@ const game = (function(){
                 const element = document.createElement("p")
                 const textNode = document.createTextNode(playerTurn)
                 if (turn){
-                    element.classList.add("addX","move")
+                    element.classList.add("addX")
                     whichPlayer.textContent = player2name
                     whichPlayer.classList.add("player-orange")
                     
                 }
                 else {
-                    element.classList.add("addO","move")
+                    element.classList.add("addO")
                     whichPlayer.textContent=player1name
                     whichPlayer.classList.remove("player-orange")
 
@@ -273,6 +272,9 @@ const game = (function(){
                 }
                 element.appendChild(textNode)
                 e.target.appendChild(element)
+                setTimeout(() => {
+                    element.classList.add("move");
+                    }, 10);
                 turn = !turn;
                 }
             }
