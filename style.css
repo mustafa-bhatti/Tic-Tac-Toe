@@ -4,6 +4,12 @@
     color: white;
     background-color: rgb(1, 1, 53);
 }
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
 .gameboard-container{
     display: grid;
@@ -50,7 +56,7 @@
     font-size: 1.7rem;
     font-weight: bold;
     gap: 100px;
-    margin-top: 50px;
+    margin-top: 20px;
 
 }
 
@@ -133,4 +139,8 @@ button {
 
 button:active{
     background-color: black;
+}
+
+.newBtn{
+    margin: 20px 0px;
 }

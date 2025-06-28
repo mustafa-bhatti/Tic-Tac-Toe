@@ -116,17 +116,13 @@ const gameboard = (function(){
 
 const game = (function(){
     const dialog = document.querySelector("dialog")
-    const form = document.querySelector("form")
     const submitBtn = document.querySelector(".submit-dialog")
-    const player1input = document.querySelector("#player1").value
-    const player2input = document.querySelector("#player2").value
     const inputField = document.querySelectorAll("input");
 
 
 
     let box = document.querySelectorAll(".box");
     let whichPlayer = document.querySelector("#which-player");
-    whichPlayer.textContent=player.getPlayer1()
     dialog.showModal()
     let turn = true;
     const bindEvent = function(){
@@ -135,8 +131,10 @@ const game = (function(){
                 updateVal(e)
             })
         })
-        submitBtn.addEventListener("click",(e)=>{
-            let validity =true;
+        submitBtn.addEventListener("click",setNames)
+    }
+    const setNames = function(){
+        let validity =true;
             inputField.forEach((value) =>{
                 if (value.checkValidity()==false){
                     validity=false;
@@ -146,28 +144,28 @@ const game = (function(){
                 const player1input = document.querySelector("#player1").value
                 const player2input = document.querySelector("#player2").value
                 player.setPlayers(player1input,player2input)
-                console.log(player.getPlayernames())
+                whichPlayer.textContent=player1input
 
             }
-        })  
     }
+    
     const updateVal = function(e){
         let pos = e.target.dataset.value
-
+        
         if (!player.getWin()){
+            let [player1name, player2name] = player.getPlayernames()
             let [moveFlag,playerTurn] = gameboard.move(pos,turn)
             if (moveFlag){
-
                 const element = document.createElement("p")
                 const textNode = document.createTextNode(playerTurn)
                 if (turn){
                     element.classList.add("addX")
-                    whichPlayer.textContent="Player 2"
+                    whichPlayer.textContent = player2name
 
                 }
                 else {
                     element.classList.add("addO")
-                    whichPlayer.textContent="Player 1"
+                    whichPlayer.textContent=player1name
 
                 }
                 element.appendChild(textNode)
