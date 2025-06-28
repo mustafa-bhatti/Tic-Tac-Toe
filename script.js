@@ -82,7 +82,6 @@ const gameboard = (function(){
             let win = true;
             for (let x of winCombos[i]){
                 if (board[x] != marker){
-                    console.log(board[x],marker)
                     win = false;
                     break}
             } 
@@ -118,10 +117,11 @@ const gameboard = (function(){
 
 
 const game = (function(){
+    const dialog = document.querySelector("dialog")
     let box = document.querySelectorAll(".box");
     let whichPlayer = document.querySelector("#which-player");
     whichPlayer.textContent="Player 1"
-
+    dialog.showModal()
     let turn = true;
     const bindEvent = function(){
         box.forEach((b,e)=>{

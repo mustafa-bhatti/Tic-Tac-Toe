@@ -64,3 +64,67 @@
     text-align: center;
     line-height: 35px;
 }
+
+dialog{
+    height: 50vh;
+    width: min(80vw,750px);
+    margin: auto;
+    padding-top: 100px;
+    color: rgb(0, 110, 255);
+
+}
+::backdrop {
+  background-color: rgb(2, 1, 14);
+  opacity: 0.8;
+}
+
+/* form styling */
+form {
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;    
+    gap: 50px;
+}
+label{
+    margin-bottom: 5px;
+    font-size: 17px;
+    font-weight: bold;
+    display: block;
+}
+input {
+    padding: 5px 10px;
+    width: min(250px,80%);
+    box-shadow: 3px 3px 12px rgba(15, 39, 172, 0.685);
+    outline: none;
+    border: 1px solid rgb(131, 131, 131);
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    border-radius: 10px;
+}
+
+input#read{
+    accent-color: blue;
+}
+
+button {
+   margin: 20px 50px 0px 0px;
+   padding: 15px;
+   -webkit-border-radius: 15px;
+   -moz-border-radius: 15px;
+   -ms-border-radius: 15px;
+   -o-border-radius: 15px;
+   border-radius: 15px;
+   border: none;
+   background-color: rgb(213, 151, 17);
+   color: white;
+   font-weight: bold;
+   cursor: pointer;
+}
+
+button:active{
+    background-color: black;
+}
