@@ -1,13 +1,13 @@
 const player = (function(){
     let player1 = "X"
     let player2= "O"
-    let player1Name = "mustafa";
-    let player2Name = "Rida";
+    let player1Name;
+    let player2Name;
     let win = false
     
     const isWin = function(){
-        let isWin1 = gameboard.checkWin(player1)
-        let isWin2 = gameboard.checkWin(player2)
+        let isWin1 = gameboard.checkWin(player1,player1Name)
+        let isWin2 = gameboard.checkWin(player2,player2Name)
         if (isWin1 == true){
             win = player1Name
         }
@@ -23,10 +23,17 @@ const player = (function(){
         return player1
     }
     const getPlayer2 = function(){
-    return player2
+        return player2
+    }
+    const setPlayers = function(name1,name2){
+        player1Name = name1
+        player2Name = name2
+    }
+    const getPlayernames = function(){
+        return [player1Name,player2Name]
     }
     return {
-       getPlayer1,getPlayer2,isWin,getWin
+       getPlayer1,getPlayer2,isWin,getWin,setPlayers,getPlayernames
     }
 })()
 
@@ -69,7 +76,7 @@ const gameboard = (function(){
         return [isValid,curr_player]
     }
 
-    const checkWin = function(marker){
+    const checkWin = function(marker,name){
         const isWin = document.querySelector(".who-win")
         const turnCard = document.querySelector(".turn")
         const winCard = document.querySelector(".win-card")
@@ -87,7 +94,7 @@ const gameboard = (function(){
             } 
             if (win == true){
                 console.log("Player ",marker," Wins")
-                isWin.textContent=marker
+                isWin.textContent=name
                 turnCard.classList.add("hide-div")
                 winCard.classList.toggle("hide-div")
                 return true
@@ -107,20 +114,19 @@ const gameboard = (function(){
     }
 })()
 
-// gameboard.move(2,"player1")
-// gameboard.move(4,"player1")
-// gameboard.move(6,"player1")
-// gameboard.move(0,"player2")
-// gameboard.move(1,"player2")
-
-
-
-
 const game = (function(){
     const dialog = document.querySelector("dialog")
+    const form = document.querySelector("form")
+    const submitBtn = document.querySelector(".submit-dialog")
+    const player1input = document.querySelector("#player1").value
+    const player2input = document.querySelector("#player2").value
+    const inputField = document.querySelectorAll("input");
+
+
+
     let box = document.querySelectorAll(".box");
     let whichPlayer = document.querySelector("#which-player");
-    whichPlayer.textContent="Player 1"
+    whichPlayer.textContent=player.getPlayer1()
     dialog.showModal()
     let turn = true;
     const bindEvent = function(){
@@ -129,6 +135,21 @@ const game = (function(){
                 updateVal(e)
             })
         })
+        submitBtn.addEventListener("click",(e)=>{
+            let validity =true;
+            inputField.forEach((value) =>{
+                if (value.checkValidity()==false){
+                    validity=false;
+                }
+            });
+            if (validity){
+                const player1input = document.querySelector("#player1").value
+                const player2input = document.querySelector("#player2").value
+                player.setPlayers(player1input,player2input)
+                console.log(player.getPlayernames())
+
+            }
+        })  
     }
     const updateVal = function(e){
         let pos = e.target.dataset.value
@@ -154,7 +175,9 @@ const game = (function(){
                 turn = !turn;
                 }
             }
-}
+        }
+
+
     bindEvent()
 })()
 

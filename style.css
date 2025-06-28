@@ -63,13 +63,18 @@
 .win-card{
     text-align: center;
     line-height: 35px;
+    text-transform: capitalize;
+}
+
+.who-win{
+    color: orange;
 }
 
 dialog{
-    height: 50vh;
+    height: 74vh;
     width: min(80vw,750px);
     margin: auto;
-    padding-top: 100px;
+    padding-top: 5px;
     color: rgb(0, 110, 255);
 
 }
@@ -84,7 +89,7 @@ form {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    align-items: center;    
+    /* align-content: center;     */
     gap: 50px;
 }
 label{
@@ -113,6 +118,7 @@ input#read{
 button {
    margin: 20px 50px 0px 0px;
    padding: 15px;
+   width: 100px;
    -webkit-border-radius: 15px;
    -moz-border-radius: 15px;
    -ms-border-radius: 15px;
