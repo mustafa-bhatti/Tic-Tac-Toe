@@ -24,7 +24,6 @@ body {
 }
 
 .box{
-
     cursor: pointer;
     text-align: center;
     background-color: #061d66;
@@ -58,6 +57,8 @@ body {
     font-weight: bold;
     gap: 50px;
     margin-top: 20px;
+    text-transform: capitalize;
+    text-align: center;
 
 }
 
@@ -144,8 +145,4 @@ button:active{
 
 .newBtn{
     margin: 20px 0px;
-}
-
-.score {
-    /* font-size: 30px; */
 }

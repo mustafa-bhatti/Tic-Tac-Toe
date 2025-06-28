@@ -12,9 +12,15 @@ const player = (function(){
         let isWin2 = gameboard.checkWin(player2,player2Name)
         if (isWin1 == true){
             win = player1Name
+            player1score++
+            game.element1score.textContent = player1score
+
         }
         else if (isWin2 == true){
             win = player2Name;
+            player2score++
+            game.element2score.textContent = player2score
+
         }   
         else {
             win =false
@@ -43,6 +49,7 @@ const player = (function(){
     const getPlayerScores = function(){
         return [player1score,player2score]
     }
+
     return {
        getPlayer1,
        resetWin,
@@ -50,7 +57,8 @@ const player = (function(){
        isWin,getWin,
        setPlayers,
        getPlayernames,
-       getPlayerScores
+       getPlayerScores,
+
     }
 })()
 
@@ -88,7 +96,7 @@ const gameboard = (function(){
             board[pos] = curr_player;
             isValid=true
             hit.currentTime=0;
-            hit.volume=0.9
+            hit.volume=0.5
             hit.play()
             player.isWin()
 
@@ -153,10 +161,18 @@ const game = (function(){
     const inputField = document.querySelectorAll("input");
     let box = document.querySelectorAll(".box");
     let whichPlayer = document.querySelector("#which-player");
-
+    // SCORE CONTAINERS
+    const player1Score = document.querySelector(".player1-score-container")
+    const player2Score = document.querySelector(".player2-score-container")
+    const element1 = document.createElement("p")
+    const element2 = document.createElement("p")
+    const element1score = document.createElement("p")
+    const element2score = document.createElement("p")
+    // END SCORES
     dialog.showModal()
     const newGame = document.querySelector(".newBtn")
     let turn = true;
+
     const resetSound = new Audio("audio/swoosh.mp3")
 
     const bindEvent = function(){
@@ -171,7 +187,7 @@ const game = (function(){
 
     const reset = function(){
         resetSound.duration = 0;
-        resetSound.volume = 0.08;
+        resetSound.volume = 0.03;
 
         resetSound.play()
         gameboard.init()
@@ -180,16 +196,16 @@ const game = (function(){
         })
         player.resetWin()
         gameboard.winReset()
+        
+        let [p1Score,p2Score] = player.getPlayerScores()
+        element1score.textContent = p1Score;
+        element2score.textContent = p2Score;
+
         turn = true
     }
 
     const setNames = function(){
-        const player1Score = document.querySelector(".player1-score-container")
-        const player2Score = document.querySelector(".player2-score-container")
-        const element1 = document.createElement("p")
-        const element2 = document.createElement("p")
-        const element1score = document.createElement("p")
-        const element2score = document.createElement("p")
+        
         
         let validity =true;
             inputField.forEach((value) =>{
@@ -213,8 +229,8 @@ const game = (function(){
                 element1score.appendChild(node1score)
                 element2.appendChild(node2)
                 element2score.appendChild(node2score)
-                element1score.classList.add("score")
-                element2score.classList.add("score")
+                // element1score.classList.add("score")
+                // element2score.classList.add("score")
 
                 player1Score.appendChild(element1)
                 player1Score.appendChild(element1score)
@@ -253,6 +269,10 @@ const game = (function(){
 
         // execute bind method
     bindEvent()
+    return {
+        element1score,
+        element2score
+    }
 })()
 
 
