@@ -71,7 +71,10 @@ const gameboard = (function(){
     const winCard = document.querySelector(".win-card")
 
     const hit = new Audio("audio/pop.mp3")
+    hit.volume=0.5
     const winSound = new Audio("audio/win.mp3")
+    winSound.volume= 0.06
+
     const init = function(){
         for(let i=0;i<9;i++){
             board[i] = i
@@ -96,7 +99,6 @@ const gameboard = (function(){
             board[pos] = curr_player;
             isValid=true
             hit.currentTime=0;
-            hit.volume=0.5
             hit.play()
             player.isWin()
 
@@ -117,20 +119,22 @@ const gameboard = (function(){
             [0,3,6],[1,4,7],[2,5,8],
             [0,4,8], [2,4,6]
         ]
+        let win = false
         for (let i =0;i<winCombos.length;i++){
-            let win = true;
-            for (let x of winCombos[i]){
-                if (board[x] != marker){
-                    win = false;
-                    break}
-            } 
+            if (winCombos[i].every(idx => board[idx]==marker)){
+                win = true
+                winCombos[i].forEach(i =>{
+                    const cell  =document.querySelector(`.box[data-value="${i}"]`)
+                    cell.classList.add("highlight")
+                })
+            }
+             
             if (win == true){
                 console.log("Player ",marker," Wins")
                 isWin.textContent=name
                 turnCard.classList.toggle("hide-div")
                 winCard.classList.toggle("hide-div")
                 winSound.currentTime = 0;
-                winSound.volume= 0.06
                 winSound.play()
                 return true
             }
@@ -193,6 +197,7 @@ const game = (function(){
         gameboard.init()
         box.forEach((b) => {
             b.replaceChildren()
+            b.classList.remove("highlight")
         })
         player.resetWin()
         gameboard.winReset()
@@ -201,6 +206,7 @@ const game = (function(){
         element1score.textContent = p1Score;
         element2score.textContent = p2Score;
 
+        
         turn = true
     }
 
