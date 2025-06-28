@@ -125,9 +125,9 @@ const gameboard = (function(){
     }
     
     const winReset = function(){
-        isWin.textContent=""
-        turnCard.classList.toggle("hide-div")
-        winCard.classList.toggle("hide-div")
+        isWin.textContent=""    
+        turnCard.classList.remove("hide-div")
+        winCard.classList.add("hide-div")
     }
     init()
     displayBoard()
