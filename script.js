@@ -1,7 +1,36 @@
+const player = (function(){
+    let player1 = "X"
+    let player2= "O"
+    let player1Name = "mustafa";
+    let player2Name = "Rida";
+    let win = false
+    
+    const isWin = function(){
+        let isWin1 = gameboard.checkWin(player1)
+        let isWin2 = gameboard.checkWin(player2)
+        if (isWin1 == true){
+            win = player1Name
+        }
+        else if (isWin2 == true){
+            win = player2Name;
+        }   
+        return win
+    }
+    const getPlayer1 = function(){
+        return player1
+    }
+    const getPlayer2 = function(){
+    return player2
+    }
+    return {
+       getPlayer1,getPlayer2,isWin
+    }
+})()
+
 const gameboard = (function(){
     let board = [];
-    let player1 = "X";
-    let player2 = "O"
+    let player1 = player.getPlayer1();
+    let player2 = player.getPlayer2();
 
     const init = function(){
         for(let i=0;i<9;i++){
@@ -15,47 +44,55 @@ const gameboard = (function(){
         console.log(board.slice(6,9))
     }
 
-    const move = function(pos,player){
+    const move = function(pos,curr_player){
         let isValid = false
-        if (player == true){
-            player = player1
+        if (curr_player == true){
+            curr_player = player1
         }
         else {
-            player = player2
+            curr_player = player2
         }
         if (typeof(board[pos]) == "number"){
-            board[pos] = player;
+            board[pos] = curr_player;
             isValid=true
+            player.isWin()
+            // console.log(player)
         }
         // else {
         //  alert("ERROR: already a marker there")}
-        console.log(`Player ${player} move at index: ${pos}`)
+        console.log(`Player ${curr_player} move at index: ${pos}`)
         displayBoard()
-        checkWin(player1)
-        checkWin(player2)
-        return [isValid,player]
 
+        return [isValid,curr_player]
     }
+
     const checkWin = function(marker){
+        const isWin = document.querySelector(".who-win")
+        const turnCard = document.querySelector(".turn")
+        const winCard = document.querySelector(".win-card")
         let winCombos = [
             [0,1,2],[3,4,5],[6,7,8],
             [0,3,6],[1,4,7],[2,5,8],
             [0,4,8], [2,4,6]
         ]
-
         for (let i =0;i<winCombos.length;i++){
             let win = true;
             for (let x of winCombos[i]){
                 if (board[x] != marker){
+                    console.log(board[x],marker)
                     win = false;
                     break}
             } 
             if (win == true){
                 console.log("Player ",marker," Wins")
-                return
+                isWin.textContent=marker
+                turnCard.classList.add("hide-div")
+                winCard.classList.toggle("hide-div")
+                return true
             }
         }
     }
+    
     
     init()
     displayBoard()
@@ -63,7 +100,8 @@ const gameboard = (function(){
     return {
         init,
         displayBoard,
-        move
+        move,
+        checkWin
     }
 })()
 
@@ -73,8 +111,14 @@ const gameboard = (function(){
 // gameboard.move(0,"player2")
 // gameboard.move(1,"player2")
 
+
+
+
 const game = (function(){
     let box = document.querySelectorAll(".box");
+    let whichPlayer = document.querySelector("#which-player");
+    whichPlayer.textContent="Player 1"
+
     let turn = true;
     const bindEvent = function(){
         box.forEach((b,e)=>{
@@ -85,22 +129,29 @@ const game = (function(){
     }
     const updateVal = function(e){
         let pos = e.target.dataset.value
-        let [moveFlag,player] = gameboard.move(pos,turn)
-        if (moveFlag){
-        console.log(player)
-        const element = document.createElement("p")
-        const textNode = document.createTextNode(player)
-        if (turn){
-            element.classList.add("addX")
-        }
-        else {
-            element.classList.add("addO")
-        }
-        element.appendChild(textNode)
-        e.target.appendChild(element)
-        turn = !turn;
-        }
-    }
+
+        if (!player.isWin()){
+            let [moveFlag,playerTurn] = gameboard.move(pos,turn)
+            if (moveFlag){
+
+                const element = document.createElement("p")
+                const textNode = document.createTextNode(playerTurn)
+                if (turn){
+                    element.classList.add("addX")
+                    whichPlayer.textContent="Player 2"
+
+                }
+                else {
+                    element.classList.add("addO")
+                    whichPlayer.textContent="Player 1"
+
+                }
+                element.appendChild(textNode)
+                e.target.appendChild(element)
+                turn = !turn;
+                }
+            }
+}
     bindEvent()
 })()
 
